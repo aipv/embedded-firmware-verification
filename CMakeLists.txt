@@ -17,10 +17,10 @@ add_library(core STATIC core/src/efv_ed25519.c core/src/efv_tweetnacl_wrapper.c)
 target_include_directories(core PUBLIC ${CMAKE_SOURCE_DIR}/core/include ${CMAKE_SOURCE_DIR}/ext/tweetnacl)
 
 # ================================ test ================================
-add_executable(test_efv_sha256 core/test/test_efv_sha256.c core/src/efv_sha256.c)
+add_executable(test_efv_sha256 core/tests/test_efv_sha256.c core/src/efv_sha256.c)
 target_include_directories(test_efv_sha256 PUBLIC ${CMAKE_SOURCE_DIR}/core/include)
 
-add_executable(test_efv_ed25519 core/test/test_efv_ed25519.c)
+add_executable(test_efv_ed25519 core/tests/test_efv_ed25519.c)
 target_link_libraries(test_efv_ed25519 core)
 
 # ================================ tools ================================
