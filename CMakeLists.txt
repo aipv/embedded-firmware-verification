@@ -20,6 +20,9 @@ target_include_directories(core PUBLIC ${CMAKE_SOURCE_DIR}/core/include ${CMAKE_
 add_executable(test_efv_sha256 core/test/test_efv_sha256.c core/src/efv_sha256.c)
 target_include_directories(test_efv_sha256 PUBLIC ${CMAKE_SOURCE_DIR}/core/include)
 
+add_executable(test_efv_ed25519 core/test/test_efv_ed25519.c)
+target_link_libraries(test_efv_ed25519 core)
+
 # ================================ tools ================================
 add_executable(sodium_keypair_create tools/sodium_keypair_create.c)
 target_link_libraries(sodium_keypair_create bss ${SODIUM_LIBRARIES})
