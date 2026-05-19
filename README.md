@@ -2,6 +2,8 @@
 
 # embedded-firmware-verification
 
+![Build](https://github.com/aipv/embedded-firmware-verification/actions/workflows/build.yml/badge.svg)
+
 A lightweight signed firmware verification library for resource-constrained embedded systems.
 
 This project provides:
