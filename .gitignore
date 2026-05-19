@@ -1,0 +1,63 @@
+# =========================
+
+# Build directories
+
+# =========================
+
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# =========================
+
+# CMake generated files
+
+# =========================
+
+*.cmake
+!CMakeLists.txt
+
+# =========================
+
+# Compiled objects
+
+# =========================
+
+*.o
+*.lo
+*.a
+*.so
+*.so.*
+*.dylib
+
+# =========================
+
+# Executables
+
+# =========================
+
+*.out
+*.exe
+
+# =========================
+
+# Test binaries
+
+# =========================
+pub
+priv
+sign
+test_image.bin
+
+# =========================
+
+# Config File
+
+# =========================
+sdkconfig
+sdkconfig.old
+
