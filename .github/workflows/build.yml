@@ -1,0 +1,45 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libsodium-dev
+
+      - name: Configure project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+
+      - name: Build project
+        run: |
+          cd build
+          make -j$(nproc)
+
+      - name: Run unit tests
+        run: |
+          cd build
+          ./test_efv_sha256
+          ./test_efv_ed25519
+
+      - name: Run integration tests
+        run: |
+          cd build
+          chmod +x ../tests/*.sh
+          ../tests/test_signature_flow.sh
+          ../tests/test_image_flow.sh
