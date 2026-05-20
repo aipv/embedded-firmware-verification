@@ -1,0 +1,1 @@
+../../build/efv_image_verify tests/public_key test_image.bin

@@ -1,0 +1,1 @@
+printf '\x11\x22\x33\x44' | dd of=test_image.bin bs=1 seek=$((0x1efff0)) conv=notrunc
