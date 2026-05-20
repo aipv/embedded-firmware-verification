@@ -139,6 +139,93 @@ Run integration tests in build/ folder:
 
 ---
 
+# ESP32-S3 Verified Boot Example
+
+An ESP32-S3 OTA firmware verification example using the embedded-firmware-verification library.
+
+This project demonstrates:
+
+- Signed firmware image creation
+- SHA256 firmware integrity verification
+- Ed25519 firmware signature verification
+- Boot-time firmware validation
+- MQTT-triggered OTA firmware updates
+- HTTP OTA firmware delivery
+- Tampered firmware rejection
+
+The example integrates ESP-IDF, TweetNaCl-based Ed25519 verification, OTA firmware updates, and bootloader verification flow on ESP32-S3 devices.
+
+```text
+Firmware Build
+      ↓
+Signed Firmware Image
+      ↓
+Firmware Verification
+      ↓
+Local Flash / OTA Update
+      ↓
+Bootloader Verification
+      ↓
+Boot Verified Firmware
+```
+
+## Requirements
+
+- ESP32-S3 development board
+- ESP-IDF
+- Python 3
+- libsodium
+- mosquitto-clients
+
+## Recommended Workflow
+
+### Step 1: Build and Flash Default Firmware
+
+```bash
+cd examples/esp32-s3-secure-bootloader
+idf.py build flash monitor
+```
+
+The default firmware image is rejected because it is not signed.
+
+### Step 2: Create Signed Firmware Image and Flash
+
+```bash
+./tests/create_esp32-s3_image.sh
+./tests/flash_esp32-s3_image.sh
+idf.py monitor
+```
+
+The bootloader successfully verifies and boots the signed firmware image.
+
+### Step 3: OTA Update Flow
+
+Terminal 1: Start OTA HTTP Server
+
+```bash
+./tests/ota_server_start.sh
+```
+
+Terminal 2: Trigger OTA Update
+
+```bash
+./tests/ota_update_trigger.sh
+```
+
+The ESP32-S3 device downloads the signed firmware image and verifies the firmware during boot.
+
+## Example Boot Verification Log
+
+```text
+I (102) EFV_BOOT_VERIFY: Selected boot partition index=1 app_count=2
+I (108) EFV_BOOT_VERIFY: ========== Verify ota_1 ==========
+I (117) EFV_BOOT_VERIFY: [1/4] Partition OK
+I (1114) EFV_BOOT_VERIFY: [2/4] Signature OK
+I (1114) EFV_BOOT_VERIFY: [3/4] Manifest OK
+I (1587) EFV_BOOT_VERIFY: [4/4] Hash OK
+I (1587) EFV_BOOT_VERIFY: Booting from partition 1
+```
+
 # Security Scope
 
 Currently implemented:
