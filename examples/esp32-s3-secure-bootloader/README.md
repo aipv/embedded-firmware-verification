@@ -176,7 +176,7 @@ cmake ..
 make
 ```
 
-### Step 2: Build and Flash Default Firmware
+### Step 1: Build and Flash Default Firmware
 
 Go to the `examples/esp32-s3-secure-bootloader` folder:
 
@@ -186,7 +186,7 @@ idf.py build flash monitor
 
 The default firmware image is rejected because it is not signed.
 
-### Step 3: Create Signed Firmware Image and Flash
+### Step 2: Create Signed Firmware Image and Flash
 
 ```bash
 ./tests/create_esp32-s3_image.sh
@@ -195,7 +195,7 @@ The default firmware image is rejected because it is not signed.
 
 The bootloader successfully verifies and boots the signed firmware image.
 
-### Step 4: OTA Update Flow
+### Step 3: OTA Update Flow
 
 Terminal 1: Start OTA HTTP Server
 
@@ -210,3 +210,13 @@ Terminal 2: Trigger OTA Update
 ```
 
 The ESP32-S3 device downloads the signed firmware image and verifies the firmware during boot.
+
+### Step 4: Verify Rollback Protection
+
+Flash the default (unsigned) firmware again:
+
+```bash
+idf.py build flash monitor
+```
+
+The bootloader rejects the unsigned firmware image in OTA_0 because signature verification fails. The device automatically rolls back to the previously verified firmware image stored in OTA_1 and boots successfully from OTA_1.
