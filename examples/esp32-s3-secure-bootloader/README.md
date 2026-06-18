@@ -220,3 +220,19 @@ idf.py build flash monitor
 ```
 
 The bootloader rejects the unsigned firmware image in OTA_0 because signature verification fails. The device automatically rolls back to the previously verified firmware image stored in OTA_1 and boots successfully from OTA_1.
+
+### Step 5: Verify Tampered Firmware Rejection
+
+Create a tampered firmware image in the `build/` folder:
+
+```bash
+../tests/tamper.sh signed_firmware.bin tampered_firmware.bin 0x1effa0 11223344
+```
+
+Terminal 2: Trigger an OTA update using the tampered firmware image:
+
+```bash
+./tests/ota_update_trigger.sh tampered_firmware.bin
+```
+
+The device successfully downloads the tampered firmware image and stores it in the OTA partition. During the next boot, the bootloader detects that the firmware image has been modified, causing signature verification to fail. The bootloader rejects the tampered firmware image and does not boot it.
